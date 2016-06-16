@@ -1,0 +1,8 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+# Untracked files
+
+# Should ignore the Unused example sourcecode.R file
+Unused*

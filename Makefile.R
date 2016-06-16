@@ -1,0 +1,33 @@
+######################################################
+# Make file for week 6 case study, Worldbank income groups
+# Author: Randy Lisbona
+# Updated 6/15/2016
+#######################################################
+
+# Load libraries used in this project
+library("downloader")
+library("dplyr")
+library("questionr")
+
+
+# Set working directory
+
+setwd("C:/Users/anobs/Documents/GitHub/Unit6Casestudy")
+
+# Download worldbank data sets  
+#      /analysis/data/GDPbyCountry_raw.csv
+#      /analysis/data/IncomeGroupByCountry_raw.csv
+source("./Analysis/GatherWorldBankData.R", echo = FALSE)
+
+# Create cleaned .csv files
+#      /analysis/data/GDPbyCountry_Clean.csv
+#      /analysis/data/IncomeGroupByCountry_Clean.csv
+
+source("./Analysis/CleanWorldBankData.R", echo = FALSE)
+
+# Merge the data
+source("./Analysis/MergeWorldBankData.R", echo = FALSE, print.eval=TRUE)
+
+
+# Analysis
+source("./Analysis/AnalyzeWorldBankData.R", echo = FALSE, print.eval=TRUE)
