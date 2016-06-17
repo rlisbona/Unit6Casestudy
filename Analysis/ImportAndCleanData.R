@@ -47,7 +47,7 @@ str(GDP.raw)
 #Keep rows 5:194 that have valid data, Appears valid for 2012 dataset, recheck source in future years
 GDP_DataRows <- GDP.raw[5:194, ]
 #Keep the columns with data we need
-GDP_DataRowsValidCols <- GDP_DataRows[c(1,2,4,5)]
+GDP_DataRowsValidCols <- GDP_DataRows[,c(1,2,4,5)]
 
 #Rename the columns to be descriptive
 names(GDP_DataRowsValidCols) <- c("CountryCode","Ranking","CountryName","GDP_Millions_USD")
@@ -63,7 +63,7 @@ GDP_DataRowsValidCols$CountryCode <- as.character(GDP_DataRowsValidCols$CountryC
 GDP_DataRowsValidCols$CountryName <- as.character(GDP_DataRowsValidCols$CountryName)
 
 #cast Ranking as integer
-GDP_DataRowsValidCols$Ranking <- as.integer(GDP_DataRowsValidCols$Ranking)
+GDP_DataRowsValidCols$Ranking_int <- as.integer(GDP_DataRowsValidCols$Ranking)
 
 #Verify data classes
 str(GDP_DataRowsValidCols)
@@ -71,7 +71,8 @@ str(GDP_DataRowsValidCols)
 head(GDP_DataRowsValidCols)
 
 #Give it a new name going forward
-GDP_Clean <- GDP_DataRowsValidCols
+#GDP_Clean <- arrange(GDP_DataRowsValidCols,Ranking)
+GDP_Clean <- GDP_DataRowsValidCols[order(GDP_DataRowsValidCols$Ranking), ]
 
 #Verify new cleaned data
 str(GDP_Clean)

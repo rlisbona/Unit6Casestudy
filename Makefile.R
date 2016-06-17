@@ -17,13 +17,13 @@ setwd("C:/Users/anobs/Documents/GitHub/Unit6Casestudy")
 # Download worldbank data sets  
 #      /analysis/data/GDPbyCountry_raw.csv
 #      /analysis/data/IncomeGroupByCountry_raw.csv
-source("./Analysis/GatherWorldBankData.R", echo = FALSE)
+source("./Analysis/GatherWorldBankData.R", echo = FALSE,print.eval=TRUE)
 
 # Create cleaned .csv files
 #      /analysis/data/GDPbyCountry_Clean.csv
 #      /analysis/data/IncomeGroupByCountry_Clean.csv
 
-source("./Analysis/CleanWorldBankData.R", echo = FALSE)
+source("./Analysis/CleanWorldBankData.R", echo = FALSE,print.eval=TRUE)
 
 # Merge the data
 source("./Analysis/MergeWorldBankData.R", echo = FALSE, print.eval=TRUE)
