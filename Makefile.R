@@ -6,13 +6,26 @@
 
 # Load libraries used in this project
 library("downloader")
+#install.packages("dplyr")
 library("dplyr")
+#install.packages("plyr")
+library("plyr")
 library("questionr")
-
+library("ggplot2")
+library("magrittr")
+#install.packages("devtools")
+library(devtools)
+#install_github("plotflow", "trinker")
+#install.packages("scales")
+library("knitr")
+library("scales")
 
 # Set working directory
 
-setwd("C:/Users/anobs/Documents/GitHub/Unit6Casestudy")
+Currentdir <- getwd()
+setwd(Currentdir)
+
+#setwd("C:/Users/anobs/Documents/GitHub/Unit6Casestudy")
 
 # Download worldbank data sets  
 #      /analysis/data/GDPbyCountry_raw.csv

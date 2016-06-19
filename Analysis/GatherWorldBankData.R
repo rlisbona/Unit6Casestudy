@@ -1,7 +1,7 @@
 # Downloads the worldbank datasets, unless they have already been downloaded
 
 # 
-casestudy.link.GDPbyCountry <-c("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv")
+casestudy.link.GDP <-c("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv")
 casestudy.link.IncomeGroupByCountry <- c("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv")
 
 
@@ -18,7 +18,7 @@ if (!file.exists(GDP.pathtofile)) download(source.url,GDP.pathtofile)
 
 
 # download IncomeGroup stats
-source.url = casestudy.link.Edstats
+source.url = casestudy.link.IncomeGroupByCountry
 
 IG.filename = c("IncomeGroupByCountry_raw.csv")
 IG.pathtofile <- paste(relativeSourcePath, IG.filename, sep="/")

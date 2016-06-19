@@ -2,10 +2,10 @@
 #list.files(path = relativeSourcePath)
 
 GDP.raw <- read.csv(GDP.pathtofile,skip=0, strip.white = TRUE,blank.lines.skip = TRUE,colClasses = "character")
-paste(nrow(GDP.raw),"Records found in:", GDP.pathtofile,sep=" ")
+paste(nrow(GDP.raw),"Records read from:", GDP.pathtofile,sep=" ")
 # open the IncomeGroupByCountry_raw.csv file 
 IG.raw <- read.csv(IG.pathtofile, strip.white = TRUE,blank.lines.skip = TRUE,colClasses = "character")
-paste(nrow(IG.raw),"Records found in:", IG.pathtofile,sep=" ")
+paste(nrow(IG.raw),"Records read from:", IG.pathtofile,sep=" ")
 
 # Examine GDP.raw
 #head(GDP.raw,n=50)
@@ -52,6 +52,7 @@ GDP_Clean <- GDP_DataRowsValidCols
 IG.reduced <-IG.raw[c(1,2,3)]
 #head(IG.reduced, n= 20)
 #tail(IG.reduced, n=20)
+#IG.reduced[IG.reduced$IncomeGroup =="",]
 
 #Rename the fields we need
 names(IG.reduced) <-c("CountryCode", "CountryName","IncomeGroup")
@@ -62,10 +63,11 @@ names(IG.reduced) <-c("CountryCode", "CountryName","IncomeGroup")
 #Noticed that there are summary rows with blank Incomegroups that had a country code but looked like regions
 #Remove the summary rows with blank Incomegroups
 #and Create a new clean dataset to work with
-paste(nrow(Country.reduced),"Rows found in Income group dataset before removing blank IncomeGroups=",sep="")
-IG_Clean <- Country.reduced[!Country.reduced$IncomeGroup==" ",]
-paste(nrow(Country_Clean),"Rows in Income group dataset after removing blank IncomeGroups",sep=" ")
-RowsRemoved <-nrow(Country.reduced)-nrow(Country_Clean)
+paste(nrow(IG.reduced),"Rows found in Income group dataset before removing blank IncomeGroups",sep=" ")
+IG_Removed <- IG.reduced[IG.reduced$IncomeGroup=="",]
+IG_Clean <- IG.reduced[!IG.reduced$IncomeGroup=="",]
+paste(nrow(IG_Clean),"Rows in Income group dataset after removing blank IncomeGroups",sep=" ")
+RowsRemoved <-nrow(IG.reduced)-nrow(IG_Clean)
 paste(RowsRemoved,"Rows removed",sep = " ")
 #Sort the data
 IG_Clean <- arrange(IG_Clean,CountryCode)
@@ -75,7 +77,7 @@ IG_Clean <- arrange(IG_Clean,CountryCode)
 relativeSourcePath =c("./Analysis/Data")
 filename = c("GDPbyCountry_Clean.csv")
 pathtofile <- paste(relativeSourcePath, filename, sep="/")
-paste("Write cleaned", pathtofile, sep = " ")
+paste("Write cleaned GDP data     :", pathtofile, sep = " ")
 write.csv(GDP_Clean, file =pathtofile)
 
 
@@ -83,7 +85,7 @@ write.csv(GDP_Clean, file =pathtofile)
 relativeSourcePath =c("./Analysis/Data")
 filename = c("IncomeGroupByCountry_Clean.csv")
 pathtofile <- paste(relativeSourcePath, filename, sep="/")
-paste("Write cleaned", pathtofile, sep = " ")
+paste("Write cleaned Income Group :", pathtofile, sep = " ")
 write.csv(IG_Clean, file =pathtofile)
 
 
