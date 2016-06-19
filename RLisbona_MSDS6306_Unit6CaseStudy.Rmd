@@ -1,0 +1,108 @@
+---
+title: "RLisbona_MSDS6306_Unit6Casestudy"
+author: "Randy Lisbona"
+date: "6/18/2016"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    fig_caption: yes
+    fig_height: 7
+    fig_width: 10
+    keep_md: yes
+    number_sections: yes
+    theme: journal
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+options(width = 600)
+tidy=TRUE
+```
+
+```{r } Load_Packages, include=FALSE}
+#install.packages("dplyr")
+#install.packages("plyr")
+#install.packages("devtools")
+#install_github("plotflow", "trinker")
+#install.packages("scales")
+
+# Load libraries used in this project
+library("downloader")
+library("plyr")
+library("dplyr")
+library("questionr")
+library("ggplot2")
+library("magrittr")
+library("devtools")
+library("knitr")
+library("scales")
+
+Currentdir <- getwd()
+setwd(Currentdir)
+```
+
+## Unit 6 Case study
+
+Download, clean, merge, analyze Worldbank GDP and Income group data. The purpose of this study was compare Worldbank GDP Rank with Worldbank Incomegroup datasets by countrycode. Questions this study addresses:
+1) How many CountryCodes are in both datasets
+2) 13th country by ascending GDP Rank.  Note -There is no single country with a "13" ranking, but two that share ranking 12.5.
+3) What are average GDP Rankings of High Income: OECD and High Income nonOECD groups?
+    Information on OECD (Organization for Economic Cooperation and Development) countries can be found at <http://www.oecd.org/>
+    and a list of OECD countries can be found here <http://www.oecd.org/about/membersandpartners/list-oecd-member-countries.htm>
+
+## Download GDP and Income group data sets
+GDP source <https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv>
+Income group source <https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv>
+
+In this code section the data is downloaded from the above URL's and saved to local .csv files
+At this stage the data is raw, no rows or columns have been modified or removed.
+
+```{r Gather}
+source("./Analysis/GatherWorldBankData.R", echo = TRUE,print.eval=TRUE)
+```
+
+## Clean raw source data
+
+Cleaning steps include opening the raw source files, visually browsing the files to get a better understanding of quirks in the formatting, steps to extract and verify rows and columns to exclude.  Finally outputing and saving cleaned datasets for further analysis in this project as well as future projects that might make use of the same data sources.
+
+```{r Clean}
+source("./Analysis/CleanWorldBankData.R", echo = TRUE,print.eval=TRUE)
+```
+## Merge the GDP and Income group datasets
+
+Merging involved identifying a field common to both the GDP cleaned data and Income Group cleaned data files.
+Countrycode was common to both files and used as the matching field.
+inner and outer joins were run to understand missing fields in the combined dataset.
+
+
+```{r Merge}
+# Merge the data
+source("./Analysis/MergeWorldBankData.R", echo = TRUE, print.eval=TRUE)
+
+```
+
+## Analyze the results
+
+The analysis step consists of code necessary to answer the specific questions for the case study
+
+```{r Analyze}
+source("./Analysis/AnalyzeWorldBankData.R", echo = TRUE, print.eval=TRUE)
+```
+
+## Conclusion and summary
+
+This study started with a list of 210 countries with GDP ranking data and 190 countries with Income group classifications,  The two datasets were merged on "CountryCode" (USA, CAN, etc).  211 unique countries were found between the two datasets, 189 countries were found in both datasets, 22 were excluded due to missing data (NA's) necessary for the analysis in one or the other dataset.
+
+There was interest in finding the 13th country, ranked by Ascending GDP rank (so USA is last) likely because there is no 13th country.  Two countries, Grenada (GRD), and St. Kitts and Nevis (KNA), share rank 12 (denoted as 12.5).  Average GDP rankings were calculated for High Income: OECD and High Income: nonOECD countries, OECD countries show a higher GDP rank (lower numbers are higher ranks)
+
+Plots were produced to visually show the GDP rank of the income groups.  Significant effort, bordering on ridiculous,  was spent learning the idiosyncrasies of ggplot involved with getting the X axis country codes to sort by descending $GDP rather than alphabetically. This groups the OECD countries and higher GDP in the upper left quadrant of charts 3 and 4. Log transform plots were also included to bring the high GDP and low GDP countries closer together on the Y axis plots.  
+
+A table of GDP rankings (5 quantiles) was created, along with Frequency of income groups, SD/min/mean/max. There appears to be a significant GDP advantage to OECD member countries, further analysis would need to be performed to verify this through acceptable statistical methods using tedious sofware such as R or SAS.  
+
+Five countries were found in the top 38 countries by $GDP with Lower middle income groups.  Likely due to low wages in these countries.
+
+## Further analysis
+
+Output graphics from R were disappointing, due to time constraints, it was not possible to fit the plots to the page width or rotate the page to landscape orientation so the country codes on the X axis did not land on top of each other. Graphics output was better in R studio than in the HTML output. Seemingly simple tasks are exceedingly difficult in R.  Table formatting would need to be improved for publication quality graphics.  This was a challenging project.
